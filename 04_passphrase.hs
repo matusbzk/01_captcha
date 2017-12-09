@@ -13,7 +13,7 @@ valid = sum $ map (\xs -> if hasDuplicates xs then 0 else 1) input
 
 -- |Input, but each word is sorted alphabetically
 sortedInput :: [[String]]
-sortedInput = (map (map sort . words) $ lines inputString)
+sortedInput = map (map sort . words) $ lines inputString
 
 -- |Number of valid passphrases for part 2
 valid2 :: Int
