@@ -1,4 +1,3 @@
-import Data.List
 import Data.Maybe
 
 type Name = String
