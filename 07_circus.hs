@@ -51,7 +51,7 @@ type Weights = [(Name, Int)]
 
 -- |Returns program's weight given a weight context
 getWeightOfProgram2 :: Name -> Weights -> Int
-getWeightOfProgram2 p list = fromJust (lookup p list)
+getWeightOfProgram2 p list = fromJust $ lookup p list
 
 -- |All of each programs descendants need to have the same weight.
 -- This checks it and returns an error if it found two descendants
@@ -90,5 +90,5 @@ run n = run' n startWeights
 -- |Computes run function
 run' :: Int -> Weights -> Weights
 run' 0 start = start
-run' n start = run' (n-1) (doAnIteration start)
+run' n start = run' (n-1) $ doAnIteration start
  
