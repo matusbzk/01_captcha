@@ -16,10 +16,13 @@ move (x,y) "sw" = (x-1,y-1)
 
 -- |Calculates a distance from a position
 distance :: Position -> Int
-distance (0,y) = y `div` 2
-distance (x,0) = x `div` 2
-distance (x,y) = if x>0 && y>0 then 1 + distance (x-1,y-1)
-                               else distance (abs x, abs y)
+distance (x,y) = distancePositive (abs x, abs y)
+
+-- |Calculates distance, given both coordinates are positive
+distancePositive :: Position -> Int
+distancePositive (0,y) = y `div` 2
+distancePositive (x,0) = x `div` 2
+distancePositive (x,y) = 1 + distancePositive (x-1,y-1)
 
 -- |Result to first part - distance in the end
 result1 :: Int
