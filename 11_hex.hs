@@ -19,7 +19,7 @@ distance :: Position -> Int
 distance (0,y) = y `div` 2
 distance (x,0) = x `div` 2
 distance (x,y) = if x>0 && y>0 then 1 + distance (x-1,y-1)
-                                               else distance (abs x, abs y)
+                               else distance (abs x, abs y)
 
 -- |Result to first part - distance in the end
 result1 :: Int
