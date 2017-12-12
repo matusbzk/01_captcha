@@ -30,7 +30,7 @@ result1 = distance $ foldl move (0,0) input
 
 -- |Path where the program goes
 path :: [Position]
-path = (\(x,xs) -> x:xs) $ foldl (\(pos, list) dir -> (move pos dir, pos:list)) ((0,0),[]) input
+path = scanl move (0,0) input   --thanks, u/WhatAHaskell
 
 -- |Maximum of given distances of the path
 result2 :: Int
