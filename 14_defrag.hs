@@ -1,6 +1,4 @@
-module Day14_defrag (result1, result2) where
-
-import Day10_hash (hash)
+import Day10_hash (hash) --hash function from day 10 (will not work with how the files are saved to git; I'll get to it)
 import Data.List
 
 inputString :: String
