@@ -1,3 +1,5 @@
+module Day10_hash (hash, result1, result2) where
+
 import Data.Char
 import Data.Bits
 
@@ -51,10 +53,6 @@ stringToASCII = map ord
 run64 :: State -> [Int] -> State
 run64 state lens = run state $ take (length lens * 64) (cycle lens)
 
--- |The lenghts sequence to part 2
-part2Lengths :: [Int]
-part2Lengths = stringToASCII lengthsString ++ [17, 31, 73, 47, 23]
-
 -- |Replace each 16 elements with their xor
 doXor :: [Int] -> [Int]
 doXor [] = []
@@ -64,6 +62,14 @@ doXor xs = foldr1 xor (take 16 xs) : doXor (drop 16 xs)
 intToHex :: Int -> String
 intToHex n = intToDigit (n `div` 16) : intToDigit (n `mod` 16) : []
 
+-- |Prepares string to hashing
+prepareString :: String -> [Int]
+prepareString s = stringToASCII s ++ [17, 31, 73, 47, 23]
+
+-- |Computes a hash from string
+hash :: String -> String
+hash s = concat . map intToHex . doXor . snd3 $ run64 startState (prepareString s)
+
 -- |Result to second part - hash
 result2 :: String
-result2 = concat . map intToHex . doXor . snd3 $ run64 startState part2Lengths
+result2 = hash lengthsString
