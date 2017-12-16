@@ -1,8 +1,10 @@
+module Day06_redistribution (result1, result2) where
+
 import Data.Maybe
 import Data.List
 
 inputString :: String
-inputString = "10\t3\t15\t10\t5\t15\t5\t15\t9\t2\t5\t8\t5\t2\t3\t6\n"
+inputString = "0\t5\t10\t0\t11\t14\t13\t4\t11\t8\t8\t7\t1\t4\t12\t11\n"
 
 -- |Represents a current state of distrubition of blocks into banks
 type State = [Int]
@@ -48,6 +50,9 @@ insertIntoNext i n banks = insertIntoNext ((i+1) `mod` length banks) (n-1)
 numberOfIterations :: Int
 numberOfIterations = run 0 banksStart []
 
+result1 :: Int
+result1 = numberOfIterations
+
 -- |Computes iterations until a configuration is produced that has been seen before
 -- | and counts the iterations
 run :: Int -> State -> [State] -> Int
@@ -60,6 +65,9 @@ run n banks history = if elem newBanks newHistory then n+1
 -- |Result to part 2
 lengthOfCycle :: Int
 lengthOfCycle = run2 0 banksStart []
+
+result2 :: Int
+result2 = lengthOfCycle
 
 -- |Computes iterations until a configuration is produced that has been seen before
 -- | and then counts the length of a cycle
