@@ -1,3 +1,5 @@
+module Day11_hex (result1, result2) where
+
 type Position = (Int, Int)
 
 type Direction = String
