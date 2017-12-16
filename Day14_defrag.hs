@@ -1,4 +1,6 @@
-import Day10_hash (hash) --hash function from day 10 (will not work with how the files are saved to git; I'll get to it)
+module Day14_defrag (result1, result2) where
+
+import Day10_hash (hash)
 import Data.List
 
 inputString :: String
@@ -86,6 +88,7 @@ merge' (a,b) acc ((c,d):xs)
    | otherwise                        = merge' (a,b) ((c,d):acc) xs
 
 -- |Number of regions - result to part 2
+-- takes a few minutes
 result2 :: Int
 result2 = length $ merge toMerge
 
