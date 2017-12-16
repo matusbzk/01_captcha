@@ -1,3 +1,5 @@
+module Day12_components (result1, result2) where
+
 import Data.List
 import Data.Maybe
 
