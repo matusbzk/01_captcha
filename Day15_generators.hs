@@ -9,10 +9,6 @@ start :: Generator -> Int
 start A = 783
 start B = 325
 
-testStart :: Generator -> Int
-testStart A = 65
-testStart B = 8921
-
 factor :: Generator -> Int
 factor A = 16807
 factor B = 48271
@@ -58,7 +54,7 @@ nextValue2 gen prev = if nv `mod` criteria gen == 0 then nv
 generated2 :: Generator -> [Int]
 generated2 gen = tail $ iterate (nextValue2 gen) (start gen)
 
--- |Computes 40 milion pairs and for each of them
+-- |Computes 5 milion pairs and for each of them
 --  returns whether their last 16 bits match  - part 2 version
 boolList5Mil :: [Bool]
 boolList5Mil = zipWith (==) (map (.&. 0xffff) . take 5000000 $ generated2 A) 
