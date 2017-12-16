@@ -1,5 +1,7 @@
+module Day03_spiral (result1, result2) where
+
 input :: Int
-input = 265149
+input = 289326
 
 -- |How many steps in given direction is needed
 -- >>> [1,1,2,2,3,3,4,4,5,5,...]
@@ -26,8 +28,8 @@ move (x,y) "Down" = (x,y-1)
 whereAmI :: Int -> [(Int, Int)]
 whereAmI n = foldl (\(loc:xs) dir -> move loc dir :loc:xs) [(0,0)] $ take n whereToGo
 
--- |Result of the first part
-shortestPath = (\(x,y) -> abs x + abs y) $ head (whereAmI input)
+-- |Result of the first part - shortest path to given input
+result1 = (\(x,y) -> abs x + abs y) $ head (whereAmI input)
 
 -- |After n steps, what will my position and value in that position be (+history)
 values :: Int -> [((Int, Int), Int)]
@@ -36,9 +38,9 @@ values n = ( (x,y), sum [ v | ((a,b),v) <- recur, abs (x-a) <= 1, abs (y-b) <= 1
                  where (x,y) = head (whereAmI n)
                        recur = values (n-1)
 
--- |Result of the second part
-firstLarger :: Int
-firstLarger = checkN 1
+-- |Result of the second part - first number bigger then input
+result2 :: Int
+result2 = checkN 1
 
 -- |Finds the first value bigger then input
 checkN :: Int -> Int
