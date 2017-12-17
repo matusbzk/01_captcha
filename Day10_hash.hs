@@ -2,9 +2,7 @@ module Day10_hash (hash, result1, result2) where
 
 import Data.Char
 import Data.Bits
-
-snd3 :: (a,b,c) -> b
-snd3 (_,x,_) = x
+import AoC2017
 
 startList :: [Int]
 startList = [0..255]
