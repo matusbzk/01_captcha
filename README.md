@@ -1,4 +1,6 @@
 # AoC2017
 Advent of Code 2017 in Haskell
 
-Solution to Day 5 is actually very inefficient, and I had to calculate the result in C# (especially for part 2). But I found an effective solution to this on Reddit, so it is possible.
+I decided to do [Advent of Code 2017](http://adventofcode.com/2017) in Haskell. I am doing this mainly to challenge myself.
+
+Some of these solutions are very inefficient and cannot calculate the actual result. Sometimes, I calculated the result in C#, sometimes I found better Haskell solutions on [Reddit](https://www.reddit.com/r/adventofcode/), but I do not want to upload solutions that are not mine.
