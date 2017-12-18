@@ -87,7 +87,7 @@ finalState :: State
 finalState = run !! 1373 --I tried running it, and found where it show the error
 
 -- |Result is obtained from error
-result1 = run
+result1 = thd3 finalState
 
 -- |Queue of messages - by program id
 type Messages = [Int]
