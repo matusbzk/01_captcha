@@ -6,7 +6,10 @@ module AoC2017
    snd3,
    thd3,
    hasDuplicates,
-   iterateN) where
+   iterateN,
+   isNum) where
+
+import Data.Char
 
 fst3 :: (a,b,c) -> a
 fst3 (x,_,_) = x
@@ -25,3 +28,8 @@ hasDuplicates (x:xs) = if elem x xs then True else hasDuplicates xs
 -- |Iterates a function n  times
 iterateN :: Int -> (a -> a) -> a -> a
 iterateN n f = foldr (.) id (replicate n f)
+
+-- |Returns whether char is digit or '-'
+isNum :: Char -> Bool
+isNum '-' = True
+isNum x = isDigit x
