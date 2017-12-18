@@ -1,7 +1,7 @@
 module Day08_registers (result1, result2) where
 
 import Data.Maybe
-import Data.Char
+import AoC2017
 
 -- |Names of registers
 type Name = String
@@ -44,8 +44,8 @@ parseLine line val = (head line,
 -- |From instruction and register values evaluates the boolean condition
 getBool :: Instruction -> Values -> Bool
 getBool line val = getFunction (line!!5) 
-                   (if all (\x -> isNumber x || x == '-') first then read first else getVal first val)
-                   (if all (\x -> isNumber x || x == '-') second then read second else getVal second val)
+                   (if all isNum first then read first else getVal first val)
+                   (if all isNum second then read second else getVal second val)
                        where first = line!!4
                              second = line!!6
 
