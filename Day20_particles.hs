@@ -15,7 +15,6 @@ type Particle = (Int, (Int, Int, Int), (Int, Int, Int), (Int, Int, Int))
 input :: [Particle]
 input = input' 0 $ map words . lines $ inputString
 
-
 input' :: Int -> [[String]] -> [Particle]
 input' _ [] = []
 input' n ((a:b:[c]):xs) = (n, parse a, parse b, parse c) : input' (n+1) xs
