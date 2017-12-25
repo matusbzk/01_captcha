@@ -7,9 +7,11 @@ module AoC2017
    thd3,
    hasDuplicates,
    iterateN,
-   isNum) where
+   isNum,
+   isPrime) where
 
 import Data.Char
+import Primes  --Data.Numbers.Primes
 
 fst3 :: (a,b,c) -> a
 fst3 (x,_,_) = x
