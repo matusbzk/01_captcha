@@ -1,4 +1,4 @@
-module Day25_turing (result1) where
+module Day25_turing (result) where
 
 import Data.Foldable (foldl')
 import qualified Data.IntSet as IntSet
@@ -60,4 +60,4 @@ checksum (_, tape, _) = IntSet.size tape
 run = foldl' (\st _ -> step st) startState [1..steps]
 
 -- |Number of ones aftes 'steps' iterations
-result1 = checksum run
+result = checksum run
