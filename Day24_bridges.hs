@@ -51,8 +51,10 @@ keepLongest brs = filter (\br -> length br == l) brs
           where l = getLongest brs
 
 -- |Gets the strength of the strongest bridge starting at 0
+result1 :: Int
 result1 = getStrongest $ findBridges 0 input
 
 -- |Gets the strength of the longest bridge. If there are more,
 -- chooses the strongest
+result2 :: Int
 result2 = getStrongest . keepLongest $ findBridges 0 input
