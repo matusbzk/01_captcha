@@ -1,19 +1,14 @@
-{-# LANGUAGE BangPatterns #-}
-module Day25_turing (result1, result2, main) where
+module Day25_turing (result1) where
 
 import Data.Foldable (foldl')
+import qualified Data.IntSet as IntSet
 
 -- |Current position of cursor
 type Position = Int
 
 -- |Current state of the tape
--- first list is from 0 to infinity
--- second is from -1 to -infinity
-data Tape = Tap [Int] [Int]
-          deriving Eq
-
-instance Show Tape where
- show (Tap x y) = "Some tape"
+-- list of positions where there is 1
+type Tape = IntSet.IntSet
 
 -- |State of the Turing machine
 data State = A | B | C | D | E | F
@@ -23,57 +18,46 @@ data State = A | B | C | D | E | F
 --  cursor position
 --  tape
 --  current state
---  maximal absolute value of position where it got - I need it to compute checksum
-type Machine = (Position, Tape, State, Int)
+type Machine = (Position, Tape, State)
 
 -- |Number of steps until checksum - from the input
 steps :: Int
-steps = 1291924--4
+steps = 12919244
 
 -- |Takes a position and the tape and returns given value
 getValue :: Position -> Tape -> Int
-getValue n (Tap pos neg) = if n >= 0 then pos!!n
-                                     else neg!!(-n-1)
+getValue n tape = if IntSet.member n tape then 1 else 0
 
 -- |Sets a value at a given position
 setValue :: Position -> Tape -> Int -> Tape
-setValue n (Tap pos neg) v = if n >= 0 then Tap (take n pos ++ v : drop (n+1) pos) neg
-                                       else Tap pos (take (-n-1) neg ++ v : drop (-n) neg)
+setValue n tape v = if v == 0 then IntSet.delete n tape else IntSet.insert n tape
 
 -- |Performs a step
 -- taken from input
 step :: Machine -> Machine
-step !(pos, tape, A, mx) = if getValue pos tape == 0 then (pos+1,setValue pos tape 1,B, nmx)
-                                                    else (pos-1,setValue pos tape 0,C, nmx)
-                 where nmx = max (abs pos + 1) mx
-step !(pos, tape, B, mx) = if getValue pos tape == 0 then (pos-1,setValue pos tape 1,A, nmx)
-                                                    else (pos+1,tape,               D, nmx)
-                 where nmx = max (abs pos + 1) mx
-step !(pos, tape, C, mx) = if getValue pos tape == 0 then (pos+1,setValue pos tape 1,A, nmx)
-                                                    else (pos-1,setValue pos tape 0,E, nmx)
-                 where nmx = max (abs pos + 1) mx
-step !(pos, tape, D, mx) = if getValue pos tape == 0 then (pos+1,setValue pos tape 1,A, nmx)
-                                                    else (pos+1,setValue pos tape 0,B, nmx)
-                 where nmx = max (abs pos + 1) mx
-step !(pos, tape, E, mx) = if getValue pos tape == 0 then (pos-1,setValue pos tape 1,F, nmx)
-                                                    else (pos-1,tape               ,C, nmx)
-                 where nmx = max (abs pos + 1) mx
-step !(pos, tape, F, mx) = if getValue pos tape == 0 then (pos+1,setValue pos tape 1,D, nmx)
-                                                    else (pos+1,tape               ,A, nmx)
-                 where nmx = max (abs pos + 1) mx
+step (pos, tape, A) = if getValue pos tape == 1 then (pos-1,setValue pos tape 0,C)
+                                                else (pos+1,setValue pos tape 1,B)
+step (pos, tape, B) = if getValue pos tape == 1 then (pos+1,tape               ,D)
+                                                else (pos-1,setValue pos tape 1,A)
+step (pos, tape, C) = if getValue pos tape == 1 then (pos-1,setValue pos tape 0,E)
+                                                else (pos+1,setValue pos tape 1,A)
+step (pos, tape, D) = if getValue pos tape == 1 then (pos+1,setValue pos tape 0,B)
+                                                else (pos+1,setValue pos tape 1,A)
+step (pos, tape, E) = if getValue pos tape == 1 then (pos-1,tape               ,C)
+                                                else (pos-1,setValue pos tape 1,F)
+step (pos, tape, F) = if getValue pos tape == 1 then (pos+1,tape               ,A)
+                                                else (pos+1,setValue pos tape 1,D)
 
 -- |Starting state of the machine
 startState :: Machine
-startState = (0,Tap (repeat 0) (repeat 0), A, 0)
+startState = (0,IntSet.empty, A)
 
 -- |Number of ones on the tape
 checksum :: Machine -> Int
-checksum (_, Tap pos neg, _, mx) = sum (take mx pos) + sum (take mx neg)
+checksum (_, tape, _) = IntSet.size tape
 
+-- |Runs 'steps' iterations of step
 run = foldl' (\st _ -> step st) startState [1..steps]
 
+-- |Number of ones aftes 'steps' iterations
 result1 = checksum run
-
-main = print result1
-
-result2 = undefined
