@@ -8,7 +8,8 @@ module AoC2017
    hasDuplicates,
    iterateN,
    isNum,
-   isPrime) where
+   isPrime,
+   replace) where
 
 import Data.Char
 import Primes  --Data.Numbers.Primes
@@ -35,3 +36,8 @@ iterateN n f = foldr (.) id (replicate n f)
 isNum :: Char -> Bool
 isNum '-' = True
 isNum x = isDigit x
+
+-- |Replaces all occurences of x in list with y
+replace :: Eq a => a -> a -> [a] -> [a]
+replace x y [] = []
+replace x y (z:xs) = if x == z then y : replace x y xs else z : replace x y xs
